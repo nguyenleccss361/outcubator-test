@@ -1,0 +1,14 @@
+.layout-container {
+	display: flex;
+	min-height: 100vh;
+	
+	.sidebar-container {
+		min-width: 228px;
+	}
+
+	.layout-outlet {
+		flex-grow: 1;
+		display: grid;
+		place-content: center;
+	}
+}
