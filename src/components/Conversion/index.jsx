@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 import { exchangeRatesData } from '../../config/data/fakeData'
-import { useDebouncedState } from '../../utils/debounce'
+import { useDebouncedState } from '../../utils/hooks'
 import './index.scss'
+import feeIcon from '../../assets/images/fee.svg'
+import exchangeRateIcon from '../../assets/images/exchange-rate.svg'
 
 const feeRate = {
 	low: 0.005,
@@ -29,7 +31,7 @@ function Conversion({ currency, currencyTarget, amount, setTargetAmount }) {
 		async function fetchFeeRate() {
 			await sleep(1500)
 			setFee(feeCalculated)
-			setTargetAmount(recipientAmount)
+			setTargetAmount(recipientAmount.toFixed(2))
 		}
 		fetchFeeRate()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,10 +39,14 @@ function Conversion({ currency, currencyTarget, amount, setTargetAmount }) {
 
 	return (
 		<div className="conversion">
-			<p>{`${fee.toFixed(3)} ${currency?.toUpperCase()} fees`}</p>
-			<p>{`${exchangeRate.toFixed(
-				6,
-			)} ${currencyTarget?.toUpperCase()} exchange rate`}</p>
+			<div className="conversion-content">
+				<p>{`${fee.toFixed(3)} ${currency?.toUpperCase()} fees`}</p>
+				<img src={feeIcon} alt="Fee" />
+				<p>{`${exchangeRate.toFixed(
+					6,
+				)} ${currencyTarget?.toUpperCase()} exchange rate`}</p>
+				<img src={exchangeRateIcon} alt="Exchange rate" />
+			</div>
 		</div>
 	)
 }

@@ -48,3 +48,10 @@ select {
 	appearance: none;
 	text-indent: 1px;
 }
+
+// Disable arrow on input number
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	appearance: none;
+	margin: 0;
+}

@@ -1,1 +1,50 @@
-@import '../../assets/styles/variables'
+@import '../../assets/styles/variables';
+
+.conversion {
+	width: 446px;
+	height: 530px;
+	background-color: $conversion-bg;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	translate: -50% -50%;
+	z-index: -1;
+	padding-inline: 20px;
+
+	@media screen and (max-width: 630px) {
+		width: 320px;
+		height: 750px;
+	}
+	
+	&-content {
+		height: 100%;
+		border-left: 1px dashed $conversion-line;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding-inline: 27px;
+		gap: 24px;
+		font-family: Rubik;
+		font-weight: 400;
+		font-size: 12px;
+		line-height: 20px;
+		position: relative;
+
+		img {
+			width: 20px;
+			aspect-ratio: 1;
+
+			&:nth-of-type(1) {
+				position: absolute;
+				top: 44%;
+				left: -11px;
+			}
+
+			&:nth-of-type(2) {
+				position: absolute;
+				bottom: 44%;
+				left: -11px;
+			}
+		}
+	}
+}

@@ -1,53 +1,68 @@
-import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import Conversion from '../components/Conversion'
 import CurrDropDown from '../components/CurrDropDown'
 import Input from '../components/Input'
-import { useDebouncedState } from '../utils/debounce'
+import { useDebouncedState } from '../utils/hooks'
+import './ConversionPage.scss'
 
 function HomePage() {
-	const [amount, setAmount] = useState(1)
 	const [targetAmount, setTargetAmount] = useDebouncedState(null)
 
 	const [currencyParams, setCurrencyParams] = useSearchParams({
 		from: 'usd',
 		to: 'eur',
+		amount: 1,
 	})
 	const currency = currencyParams.get('from')
 	const currencyTarget = currencyParams.get('to')
+	const amount = currencyParams.get('amount')
 
 	return (
-		<div>
-			<div>
-				<CurrDropDown
+		<>
+			<div className="form-container">
+				<div className="form">
+					<CurrDropDown
+						currency={currency}
+						currencyTarget={currencyTarget}
+						setCurrency={setCurrencyParams}
+						amount={amount}
+					/>
+					<Input
+						label="You send"
+						amount={amount}
+						currency={currency}
+						currencyTarget={currencyTarget}
+						setCurrencyParams={setCurrencyParams}
+					/>
+				</div>
+				<Conversion
 					currency={currency}
 					currencyTarget={currencyTarget}
-					setCurrency={setCurrencyParams}
+					amount={amount}
+					setTargetAmount={setTargetAmount}
 				/>
-				<Input label="You send" amount={amount} setAmount={setAmount} />
+				<div className="form">
+					<CurrDropDown
+						target
+						currency={currency}
+						currencyTarget={currencyTarget}
+						setCurrency={setCurrencyParams}
+						amount={amount}
+					/>
+					<Input
+						label="Recipient gets"
+						target
+						targetAmount={targetAmount}
+						disabled
+					/>
+				</div>
 			</div>
-			<Conversion
-				currency={currency}
-				currencyTarget={currencyTarget}
-				amount={amount}
-				setTargetAmount={setTargetAmount}
-			/>
-			<div>
-				<CurrDropDown
-					target={true}
-					currency={currency}
-					currencyTarget={currencyTarget}
-					setCurrency={setCurrencyParams}
-				/>
-				<Input
-					label="Recipient gets"
-					target={true}
-					targetAmount={targetAmount}
-					disabled
-				/>
+			<Input label="Title" optional />
+			<div className="btn">
+				<button className="btn-back">Back</button>
+				<button className="btn-continue">Continue</button>
 			</div>
-			{/* <Input /> */}
-		</div>
+		</>
 	)
 }
 

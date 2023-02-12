@@ -1,0 +1,59 @@
+@import '../assets/styles/variables';
+
+.form-container {
+	position: relative;
+}
+
+.form {
+	display: flex;
+	gap: 6px;
+
+	@media screen and (max-width: 630px) {
+		flex-direction: column-reverse;
+		align-items: center;
+	}
+
+	&:nth-of-type(1) {
+		margin-bottom: 350px;
+	}
+}
+
+.btn {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+	gap: 19px;
+
+	@media screen and (max-width: 630px) {
+		flex-direction: column;
+	}
+
+	button {
+		outline: none;
+		border: 2px solid $btn;
+		border-radius: 4px;
+		font-weight: 600;
+		font-size: 13px;
+		line-height: 16px;
+		height: 40px;
+		cursor: pointer;
+	}
+	
+	&-back {
+		background-color: transparent;
+		width: 166px;
+		color: $btn-text;
+
+		@media screen and (max-width: 630px) {
+			width: 274px;
+		}
+	}
+
+	&-continue {
+		width: 274px;
+		background-color: $btn;
+		color: grey;
+	}
+}

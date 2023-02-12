@@ -18,7 +18,13 @@ const flag = {
 	gbp: ukFlag,
 }
 
-function CurrDropDown({ target, currency, currencyTarget, setCurrency }) {
+function CurrDropDown({
+	target,
+	currency,
+	currencyTarget,
+	setCurrency,
+	amount,
+}) {
 	const [isOpen, setOpen] = useState(false)
 	const [selectedItem, setSelectedItem] = useState(
 		!target ? userData[0] : userData[1],
@@ -32,9 +38,10 @@ function CurrDropDown({ target, currency, currencyTarget, setCurrency }) {
 			setCurrency({
 				from: currency,
 				to: selectedData.currency,
+				amount,
 			})
 		} else {
-			setCurrency({ from: selectedData.currency, to: currencyTarget })
+			setCurrency({ from: selectedData.currency, to: currencyTarget, amount })
 		}
 		setOpen(false)
 	}
@@ -56,7 +63,7 @@ function CurrDropDown({ target, currency, currencyTarget, setCurrency }) {
 				</div>
 				{!target ? (
 					<div className="dropdown-header-balance">
-						{selectedItem?.balance}
+						<p>{userData?.find(item => item.currency === currency)?.balance}</p>
 						<p>Available</p>
 					</div>
 				) : null}
@@ -72,7 +79,7 @@ function CurrDropDown({ target, currency, currencyTarget, setCurrency }) {
 					?.filter(item => item?.id !== selectedItem?.id)
 					?.map(item => (
 						<div
-							className="dropdown-item"
+							className={`dropdown-item ${target && 'target'}`}
 							onClick={e => handleItemClick(e.target.id)}
 							id={item?.id}
 							key={item?.id}
@@ -81,7 +88,12 @@ function CurrDropDown({ target, currency, currencyTarget, setCurrency }) {
 								<img src={flag[item?.currency]} alt={item?.currency} />
 								<p>{item?.currency.toUpperCase()}</p>
 							</div>
-							{!target ? <p>{item?.balance}</p> : null}
+							{!target ? (
+								<div className="dropdown-header-balance">
+									<p>{item?.balance}</p>
+									<p>Available</p>
+								</div>
+							) : null}
 						</div>
 					))}
 			</div>
