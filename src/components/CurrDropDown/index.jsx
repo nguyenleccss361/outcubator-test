@@ -75,7 +75,11 @@ function CurrDropDown({
 					?.filter(
 						item =>
 							item?.id !==
-							userData?.find(item => item.currency === currency)?.id,
+							userData?.find(item =>
+								!target
+									? item.currency === currency
+									: item.currency === currencyTarget,
+							)?.id,
 					)
 					?.map(item => (
 						<div
@@ -85,13 +89,24 @@ function CurrDropDown({
 							key={item?.id}
 						>
 							<div className="dropdown-header-flag">
-								<img src={flag[item?.currency]} alt={item?.currency} />
-								<p>{item?.currency.toUpperCase()}</p>
+								<img
+									src={flag[item?.currency]}
+									alt={item?.currency}
+									onClick={e => handleItemClick(e.target.id)}
+									id={item?.id}
+								/>
+								<p onClick={e => handleItemClick(e.target.id)} id={item?.id}>
+									{item?.currency.toUpperCase()}
+								</p>
 							</div>
 							{!target ? (
 								<div className="dropdown-header-balance">
-									<p>{item?.balance}</p>
-									<p>Available</p>
+									<p onClick={e => handleItemClick(e.target.id)} id={item?.id}>
+										{item?.balance}
+									</p>
+									<p onClick={e => handleItemClick(e.target.id)} id={item?.id}>
+										Available
+									</p>
 								</div>
 							) : null}
 						</div>
