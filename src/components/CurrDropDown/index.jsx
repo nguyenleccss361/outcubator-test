@@ -26,14 +26,10 @@ function CurrDropDown({
 	amount,
 }) {
 	const [isOpen, setOpen] = useState(false)
-	const [selectedItem, setSelectedItem] = useState(
-		!target ? userData[0] : userData[1],
-	)
 
 	const toggleDropdown = () => setOpen(prev => !prev)
 	const handleItemClick = id => {
 		const selectedData = userData?.find(item => item.id === parseInt(id))
-		setSelectedItem(selectedData)
 		if (target) {
 			setCurrency({
 				from: currency,

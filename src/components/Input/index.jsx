@@ -36,9 +36,9 @@ function Input({
 		<>
 			<div className={`input ${optional && 'optional'}`}>
 				<input
-					type={`${optional ? 'text' : 'number'}`}
+					type={`${optional || target ? 'text' : 'number'}`}
 					id="amount"
-					value={!target ? amount : targetAmount}
+					value={!target ? amount : targetAmount ?? '...'}
 					onChange={handleChangeAmount}
 					required
 					{...props}

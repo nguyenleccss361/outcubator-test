@@ -4,6 +4,7 @@ import { useDebouncedState } from '../../utils/hooks'
 import './index.scss'
 import feeIcon from '../../assets/images/fee.svg'
 import exchangeRateIcon from '../../assets/images/exchange-rate.svg'
+import Spinner from '../Spinner'
 
 const feeRate = {
 	low: 0.005,
@@ -22,6 +23,7 @@ function Conversion({ currency, currencyTarget, amount, setTargetAmount }) {
 				? amount * feeRate.normal
 				: 1.5 + amount * feeRate.high
 	const [fee, setFee] = useDebouncedState(1 * feeRate.low)
+	console.log('feeCalculated', feeCalculated)
 
 	const exchangeRate =
 		exchangeRatesData[currencyTarget] / exchangeRatesData[currency]
@@ -29,8 +31,10 @@ function Conversion({ currency, currencyTarget, amount, setTargetAmount }) {
 
 	useEffect(() => {
 		async function fetchFeeRate() {
+			setFee(null)
+			setTargetAmount(null)
 			await sleep(1500)
-			setFee(feeCalculated)
+			setFee(feeCalculated ?? 0)
 			setTargetAmount(recipientAmount.toFixed(2))
 		}
 		fetchFeeRate()
@@ -40,7 +44,11 @@ function Conversion({ currency, currencyTarget, amount, setTargetAmount }) {
 	return (
 		<div className="conversion">
 			<div className="conversion-content">
-				<p>{`${fee.toFixed(3)} ${currency?.toUpperCase()} fees`}</p>
+				{fee || fee === 0 ? (
+					<p>{`${fee?.toFixed(3)} ${currency?.toUpperCase()} fees`}</p>
+				) : (
+					<Spinner className="loading" />
+				)}
 				<img src={feeIcon} alt="Fee" />
 				<p>{`${exchangeRate.toFixed(
 					6,
