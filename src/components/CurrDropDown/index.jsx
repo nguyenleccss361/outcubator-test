@@ -6,9 +6,8 @@ import euFlag from '../../assets/images/EU.svg'
 import mxFlag from '../../assets/images/MX.svg'
 import plFlag from '../../assets/images/PL.svg'
 import ukFlag from '../../assets/images/UK.svg'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { DropDownSVG } from '../SVG/DropDownSVG'
-import { useSearchParams } from 'react-router-dom'
 
 const flag = {
 	usd: usFlag,
@@ -19,7 +18,7 @@ const flag = {
 	gbp: ukFlag,
 }
 
-function CurrDropDown({ target, setCurrency, setCurrencyTarget }) {
+function CurrDropDown({ target, currency, currencyTarget, setCurrency }) {
 	const [isOpen, setOpen] = useState(false)
 	const [selectedItem, setSelectedItem] = useState(
 		!target ? userData[0] : userData[1],
@@ -30,17 +29,15 @@ function CurrDropDown({ target, setCurrency, setCurrencyTarget }) {
 		const selectedData = userData?.find(item => item.id === parseInt(id))
 		setSelectedItem(selectedData)
 		if (target) {
-			setCurrencyTarget(selectedData.currency)
+			setCurrency({
+				from: currency,
+				to: selectedData.currency,
+			})
 		} else {
-			setCurrency(selectedData.currency)
+			setCurrency({ from: selectedData.currency, to: currencyTarget })
 		}
 		setOpen(false)
 	}
-
-	// const [pairParams, setPairParams] = useSearchParams()
-	// useEffect(() => {
-	// 	setPairParams({''})
-	// }, []);
 
 	return (
 		<div className="dropdown">
@@ -48,25 +45,21 @@ function CurrDropDown({ target, setCurrency, setCurrencyTarget }) {
 				className={`dropdown-header ${target && 'target'}`}
 				onClick={toggleDropdown}
 			>
-				{selectedItem ? (
-					<>
-						<div className="dropdown-header-flag">
-							<img
-								src={flag[selectedItem.currency]}
-								alt={selectedItem.currency}
-							/>
-							<p>{selectedItem.currency.toUpperCase()}</p>
-						</div>
-						{!target ? (
-							<div className="dropdown-header-balance">
-								{selectedItem.balance}
-								<p>Available</p>
-							</div>
-						) : null}
-					</>
-				) : (
-					'Select your currency'
-				)}
+				<div className="dropdown-header-flag">
+					<img
+						src={!target ? flag[currency] : flag[currencyTarget]}
+						alt={!target ? currency : currencyTarget}
+					/>
+					<p>
+						{!target ? currency.toUpperCase() : currencyTarget.toUpperCase()}
+					</p>
+				</div>
+				{!target ? (
+					<div className="dropdown-header-balance">
+						{selectedItem?.balance}
+						<p>Available</p>
+					</div>
+				) : null}
 				<DropDownSVG
 					width="14"
 					height="8"

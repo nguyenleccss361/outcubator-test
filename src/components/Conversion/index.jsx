@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { exchangeRatesData } from '../../config/data/fakeData'
+import { useDebouncedState } from '../../utils/debounce'
 import './index.scss'
 
 const feeRate = {
@@ -18,7 +19,7 @@ function Conversion({ currency, currencyTarget, amount, setTargetAmount }) {
 			: amount >= 10 && amount < 100
 				? amount * feeRate.normal
 				: 1.5 + amount * feeRate.high
-	const [fee, setFee] = useState(1 * feeRate.low)
+	const [fee, setFee] = useDebouncedState(1 * feeRate.low)
 
 	const exchangeRate =
 		exchangeRatesData[currencyTarget] / exchangeRatesData[currency]
@@ -31,6 +32,7 @@ function Conversion({ currency, currencyTarget, amount, setTargetAmount }) {
 			setTargetAmount(recipientAmount)
 		}
 		fetchFeeRate()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [feeCalculated, setTargetAmount, currency, currencyTarget])
 
 	return (

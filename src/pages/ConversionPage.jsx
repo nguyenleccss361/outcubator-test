@@ -1,21 +1,28 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import Conversion from '../components/Conversion'
 import CurrDropDown from '../components/CurrDropDown'
 import Input from '../components/Input'
+import { useDebouncedState } from '../utils/debounce'
 
 function HomePage() {
 	const [amount, setAmount] = useState(1)
-	const [targetAmount, setTargetAmount] = useState(null)
+	const [targetAmount, setTargetAmount] = useDebouncedState(null)
 
-	const [currency, setCurrency] = useState('usd')
-	const [currencyTarget, setCurrencyTarget] = useState('eur')
+	const [currencyParams, setCurrencyParams] = useSearchParams({
+		from: 'usd',
+		to: 'eur',
+	})
+	const currency = currencyParams.get('from')
+	const currencyTarget = currencyParams.get('to')
 
 	return (
 		<div>
 			<div>
 				<CurrDropDown
-					setCurrency={setCurrency}
-					setCurrencyTarget={setCurrencyTarget}
+					currency={currency}
+					currencyTarget={currencyTarget}
+					setCurrency={setCurrencyParams}
 				/>
 				<Input label="You send" amount={amount} setAmount={setAmount} />
 			</div>
@@ -26,7 +33,12 @@ function HomePage() {
 				setTargetAmount={setTargetAmount}
 			/>
 			<div>
-				<CurrDropDown target={true} setCurrencyTarget={setCurrencyTarget} />
+				<CurrDropDown
+					target={true}
+					currency={currency}
+					currencyTarget={currencyTarget}
+					setCurrency={setCurrencyParams}
+				/>
 				<Input
 					label="Recipient gets"
 					target={true}
