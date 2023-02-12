@@ -31,6 +31,7 @@ function Input({
 			})
 		}
 	}
+	console.log('amount', amount)
 
 	return (
 		<>

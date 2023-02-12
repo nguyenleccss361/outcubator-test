@@ -23,11 +23,14 @@ function Conversion({ currency, currencyTarget, amount, setTargetAmount }) {
 				? amount * feeRate.normal
 				: 1.5 + amount * feeRate.high
 	const [fee, setFee] = useDebouncedState(1 * feeRate.low)
-	console.log('feeCalculated', feeCalculated)
 
 	const exchangeRate =
 		exchangeRatesData[currencyTarget] / exchangeRatesData[currency]
 	const recipientAmount = amount * exchangeRate - feeCalculated
+	const recipientAmountFormatted = new Intl.NumberFormat('en-GB', {
+		style: 'currency',
+		currency: currencyTarget.toUpperCase(),
+	}).format(recipientAmount.toFixed(2))
 
 	useEffect(() => {
 		async function fetchFeeRate() {
@@ -35,7 +38,7 @@ function Conversion({ currency, currencyTarget, amount, setTargetAmount }) {
 			setTargetAmount(null)
 			await sleep(1500)
 			setFee(feeCalculated ?? 0)
-			setTargetAmount(recipientAmount.toFixed(2))
+			setTargetAmount(recipientAmountFormatted)
 		}
 		fetchFeeRate()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
