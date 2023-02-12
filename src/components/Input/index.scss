@@ -21,7 +21,6 @@
 		font-size: 16px;
 		line-height: 18px;
 		position: absolute;
-		z-index: 1;
 		left: 38px;
 		top: 40px;
 		background: $white;
@@ -70,13 +69,11 @@
 
 		input {
 			width: 100%;
-			z-index: -1;
 		}
 
 		label {
 			top: 14px;
 			left: 15px;
-			z-index: -1;
 		}
 	}
 

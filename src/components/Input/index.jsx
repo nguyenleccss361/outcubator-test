@@ -1,5 +1,6 @@
 import './index.scss'
 import optionalIcon from '../../assets/images/optional.svg'
+import { userData } from '../../config/data/fakeData'
 
 function Input({
 	label,
@@ -12,12 +13,23 @@ function Input({
 	optional,
 	...props
 }) {
+	const selectedBalance = userData?.find(
+		item => item.currency === currency,
+	)?.balance
 	function handleChangeAmount(e) {
-		setCurrencyParams({
-			from: currency,
-			to: currencyTarget,
-			amount: e.target.value,
-		})
+		if (selectedBalance < parseInt(e.target.value)) {
+			setCurrencyParams({
+				from: currency,
+				to: currencyTarget,
+				amount: selectedBalance,
+			})
+		} else {
+			setCurrencyParams({
+				from: currency,
+				to: currencyTarget,
+				amount: e.target.value,
+			})
+		}
 	}
 
 	return (

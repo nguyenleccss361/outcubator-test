@@ -75,6 +75,8 @@
 		opacity: 0;
 		visibility: hidden;
 		transition: opacity .2s ease-in-out;
+		z-index: 1;
+		position: absolute;
 
 		&.open {
 			display: flex;

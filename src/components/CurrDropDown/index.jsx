@@ -76,7 +76,11 @@ function CurrDropDown({
 			</div>
 			<div className={`dropdown-body ${isOpen && 'open'}`}>
 				{userData
-					?.filter(item => item?.id !== selectedItem?.id)
+					?.filter(
+						item =>
+							item?.id !==
+							userData?.find(item => item.currency === currency)?.id,
+					)
 					?.map(item => (
 						<div
 							className={`dropdown-item ${target && 'target'}`}
