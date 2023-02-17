@@ -2,7 +2,7 @@
 
 .conversion {
 	width: 446px;
-	height: 530px;
+	height: 362px;
 	background-color: $conversion-bg;
 	position: absolute;
 	top: 50%;
@@ -13,7 +13,7 @@
 
 	@media screen and (max-width: 630px) {
 		width: 280px;
-		height: 750px;
+		height: 440px;
 	}
 	
 	&-content {
@@ -24,7 +24,7 @@
 		justify-content: center;
 		padding-inline: 27px;
 		gap: 24px;
-		font-family: Rubik;
+		font-family: Rubik, sans-serif;
 		font-weight: 400;
 		font-size: 12px;
 		line-height: 20px;
@@ -38,12 +38,20 @@
 				position: absolute;
 				top: 44%;
 				left: -11px;
+
+				@media screen and (max-width: 630px) {
+					top: 43%;
+				}
 			}
 
 			&:nth-of-type(2) {
 				position: absolute;
 				bottom: 44%;
 				left: -11px;
+
+				@media screen and (max-width: 630px) {
+					bottom: 43%;
+				}
 			}
 		}
 	}

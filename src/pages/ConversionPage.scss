@@ -14,7 +14,11 @@
 	}
 
 	&:nth-of-type(1) {
-		margin-bottom: 350px;
+		margin-bottom: 175px;
+
+		@media screen and (max-width: 630px) {
+			margin-bottom: 110px;
+		}
 	}
 }
 
