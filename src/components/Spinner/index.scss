@@ -9,6 +9,7 @@
 	color: $conversion-line;
 	animation: dot-elastic 1s infinite linear;
 	margin-left: 14px;
+	margin-bottom: 10px;
 }
 
 .dot-elastic::before, .dot-elastic::after {
